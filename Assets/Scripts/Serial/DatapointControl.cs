@@ -40,7 +40,7 @@ namespace CRI.HitBoxTemplate.Serial
         [Tooltip("CurSmoothVal offset from smoothValOffset (curSRelativeVal = curSmoothVal - smoothValOffset).")]
         public float curSRelativeVal = 0.0f;
         /// <summary>
-        /// Remap data based on the entire row, range between 0.0 and 1.0.
+        /// Remap data based on  the entire row, range between 0.0 and 1.0.
         /// </summary>
         [Tooltip("Remap data based on the entire row, range between 0.0 and 1.0.")]
         public float curRemapVal = 0.0f;

@@ -8,6 +8,7 @@ using UnityEngine;
 using System.IO.Ports;
 using System.Linq;
 using System;
+using CRI.HitBoxTemplate.OSC;
 
 namespace CRI.HitBoxTemplate.Serial
 {
@@ -59,7 +60,10 @@ namespace CRI.HitBoxTemplate.Serial
         // Physics values.
         private Vector3 _acceleration;
 
-        private static readonly object _accelerationLocker = new object();
+		// OSC handler
+		private OSC_Sender _sender;
+
+		private static readonly object _accelerationLocker = new object();
         /// <summary>
         /// Acceleration values.
         /// </summary>
@@ -80,7 +84,7 @@ namespace CRI.HitBoxTemplate.Serial
         /// <summary>
         /// Max sac of accCollection.
         /// </summary>
-        private const int nAcc = 5; // max size of accCollection (size of filter)
+        private const int nAcc = 1; // max size of accCollection (size of filter)
 
         // Game values.
         /// <summary>
@@ -126,6 +130,9 @@ namespace CRI.HitBoxTemplate.Serial
             _rows = touchSurfaceGridRows;
             _cols = touchSurfaceGridCols;
             _pointGrid = new DatapointControl[_rows, _cols];
+
+			// Initializing OSC handler
+			_sender = GameObject.FindGameObjectWithTag("OSC").GetComponent<OSC_Sender>();
 
             int count = 0;
 
@@ -243,8 +250,10 @@ namespace CRI.HitBoxTemplate.Serial
         {
             if (_serialPort.IsOpen)
             {
-                // Get serial data from second thread
-                int count = QueueLength();
+				_sender.SendAcceleration(_acceleration);
+
+				// Get serial data from second thread
+				int count = QueueLength();
                 for (int i = 0; i < count; i++)
                 {
                     string rawDataStr = Dequeue();
@@ -349,11 +358,13 @@ namespace CRI.HitBoxTemplate.Serial
                                 }
                                 smoothAcc_ /= (float)_accCollection.Count;
 
-                                _acceleration = smoothAcc_;
+								_acceleration = smoothAcc_;
                                 _acceleration /= 10000f; // map acceleration TO CHANGE
                                 _dataCounter++;
-                            }
-                        }
+
+								//_sender.SendAcceleration(_acceleration);
+							}
+						}
                     }
                     break;
 

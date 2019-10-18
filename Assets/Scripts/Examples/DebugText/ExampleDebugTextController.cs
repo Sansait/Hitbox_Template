@@ -7,6 +7,9 @@ namespace CRI.HitBoxTemplate.Example
     {
         public ExampleSerialController serialController;
 
+        [SerializeField]
+        private GameObject _impact ;
+
         private void OnEnable()
         {
             ImpactPointControl.onImpact += OnImpact;
@@ -23,6 +26,8 @@ namespace CRI.HitBoxTemplate.Example
                 e.playerIndex,
                 e.impactPosition,
                 e.accelerometer));
+
+            _impact.transform.position = e.impactPosition;
         }
 
         private void Update()
