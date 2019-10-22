@@ -15,9 +15,9 @@ namespace CRI.HitBoxTemplate.OSC
 
 			message = new OscMessage();
 			message.address = "/BagTilt";
-			message.values.Add(trans.localRotation.x);
-			message.values.Add(trans.localRotation.y);
-			message.values.Add(trans.localRotation.z);
+			message.values.Add(trans.localEulerAngles.x);
+			message.values.Add(trans.localEulerAngles.y);
+			message.values.Add(trans.localEulerAngles.z);
 			osc.Send(message);
 		}
 
@@ -40,6 +40,16 @@ namespace CRI.HitBoxTemplate.OSC
 			message.address = "/Hit";
 			message.values.Add(e.impactPosition.x);
 			message.values.Add(e.impactPosition.y);
+			osc.Send(message);
+		}
+
+		public void SendAngle(float angle)
+		{
+			OscMessage message;
+
+			message = new OscMessage();
+			message.address = "/Angle";
+			message.values.Add(angle);
 			osc.Send(message);
 		}
 	}

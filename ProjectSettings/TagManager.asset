@@ -7,6 +7,7 @@ TagManager:
   - datapoint
   - Trail
   - OSC
+  - bag
   layers:
   - Default
   - TransparentFX
