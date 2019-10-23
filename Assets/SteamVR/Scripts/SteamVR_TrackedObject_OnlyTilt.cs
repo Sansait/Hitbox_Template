@@ -59,6 +59,7 @@ namespace Valve.VR
 
             var pose = new SteamVR_Utils.RigidTransform(poses[i].mDeviceToAbsoluteTracking);
             transform.localRotation = pose.rot;
+			// Keeping tracker position for latyer use in player orientation
 			posTracker = pose.pos;
         }
 
