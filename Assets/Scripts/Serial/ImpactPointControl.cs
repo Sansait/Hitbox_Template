@@ -130,8 +130,6 @@ namespace CRI.HitBoxTemplate.Serial
         {
             if (onImpact != null)
                 onImpact(this, new ImpactPointControlEventArgs(_position, serialTouchController.acceleration, playerIndex));
-
-
         }
 
         private void Update()

@@ -8,6 +8,8 @@ TagManager:
   - Trail
   - OSC
   - bag
+  - SerialLedController
+  - Cube_To_Render
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - PostProcessing
   - Player1
   - Player2
-  - 
+  - Cube_to_render
   - 
   - 
   - 

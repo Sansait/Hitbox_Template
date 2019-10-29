@@ -37,7 +37,10 @@ namespace CRI.HitBoxTemplate.Serial
         private static readonly object _ledsLocker = new object();
 
         private Texture2D _cameraTexture;
-
+		/// <summary>
+		/// Deactivate auto display when RayCasting holograms.
+		/// </summary>
+		public static bool rayCasting = false;
         /// <summary>
         /// Current texture generated from the camera.
         /// </summary>
@@ -119,12 +122,12 @@ namespace CRI.HitBoxTemplate.Serial
 
         private void Update()
         {
-            if (playerCamera.targetTexture != null && IsSerialOpen())
-            {
-                playerCamera.targetTexture.GetRTPixels(ref _cameraTexture);
-                SetPixelColor(_cameraTexture);
-            }
-        }
+			if (playerCamera.targetTexture != null && IsSerialOpen() && rayCasting == false)
+			{
+				playerCamera.targetTexture.GetRTPixels(ref _cameraTexture);
+				SetPixelColor(_cameraTexture);
+			}
+		}
 
         /// <summary>
         /// Gets the color of a led at a specific index. Thread-safe.
@@ -155,7 +158,7 @@ namespace CRI.HitBoxTemplate.Serial
         /// <summary>
         /// For each pixel in a given texture, call the SetTheLedColor function to set the color of each led.
         /// </summary>
-        private void SetPixelColor(Texture2D cameraTexture)
+        public void SetPixelColor(Texture2D cameraTexture)
         {
             // get pixel color to drive leds pannel
             int offsetX = (int)(cameraTexture.width / 2f - cameraTexture.height / 2f);

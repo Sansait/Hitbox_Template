@@ -31,6 +31,7 @@ namespace Valve.VR
 			//Debug.DrawRay(transform.position, transform.up, Color.green);
 			//Debug.DrawRay(transform.position, _bagDir, Color.red);
 			_sender.SendAngle(_angle);
+			
 		}
 	}
 }
