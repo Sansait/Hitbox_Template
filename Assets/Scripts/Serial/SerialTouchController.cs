@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO.Ports;
 using System.Linq;
-using System;
 using CRI.HitBoxTemplate.OSC;
 
 namespace CRI.HitBoxTemplate.Serial
@@ -28,7 +27,6 @@ namespace CRI.HitBoxTemplate.Serial
         /// Counts the number of data read each second.
         /// </summary>
         private int _dataCounter = 0;
-
         // Sensor grid variables
         /// <summary>
         /// The prefab of the datapoint control. The datapoint will be cloned for each sensor in the grid.
@@ -59,9 +57,6 @@ namespace CRI.HitBoxTemplate.Serial
 
         // Physics values.
         private Vector3 _acceleration;
-
-		// OSC handler
-		private OSC_Sender _sender;
 
 		private static readonly object _accelerationLocker = new object();
         /// <summary>
@@ -131,9 +126,6 @@ namespace CRI.HitBoxTemplate.Serial
             _cols = touchSurfaceGridCols;
             _pointGrid = new DatapointControl[_rows, _cols];
 
-			// Initializing OSC handler
-			_sender = GameObject.FindGameObjectWithTag("OSC").GetComponent<OSC_Sender>();
-
             int count = 0;
 
             // The grid is positionned as a child of a camera.
@@ -169,7 +161,7 @@ namespace CRI.HitBoxTemplate.Serial
                     _pointGrid[i, _cols - j - 1] = dpc;
                 }
             }
-            // Imapact point initialization
+            // Impact point initialization
             var ipc = GameObject.Instantiate(_impactPointControlPrefab, this.transform);
             ipc.threshImpact = impactThreshold;
             ipc.playerIndex = playerIndex;
@@ -250,8 +242,6 @@ namespace CRI.HitBoxTemplate.Serial
         {
             if (_serialPort.IsOpen)
             {
-				_sender.SendAcceleration(_acceleration);
-
 				// Get serial data from second thread
 				int count = QueueLength();
                 for (int i = 0; i < count; i++)
@@ -263,9 +253,10 @@ namespace CRI.HitBoxTemplate.Serial
                     }
                 }
 
+				OSC_Sender.Instance.SendAcceleration(_acceleration);
 
-                // Remap and display data points
-                for (int i = 0; i < _rows; i++)
+				// Remap and display data points
+				for (int i = 0; i < _rows; i++)
                 {
                     // Get row data range
                     float minRow = 1000.0f;
@@ -304,7 +295,7 @@ namespace CRI.HitBoxTemplate.Serial
         /// <param name="serialData">The serial data that will be parsed.</param>
         private void ParseSerialData(string serialData)
         {
-            serialData = serialData.Trim();
+            serialData = serialData.Trim(); // Removing whitespaces before and after data
 
             // First character of the string is an adress
             char adr_ = serialData.ToCharArray()[0]; // get address character

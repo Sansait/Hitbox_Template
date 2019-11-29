@@ -43,7 +43,13 @@ namespace CRI.HitBoxTemplate.Example
             }
         }
 
-        private GameObject InitSerialController(SerialSettings serialSettings, int p)
+		/// <summary>
+		/// Instantiating Serial Controller Prefab for Led & Touch Controllers
+		/// </summary>
+		/// <param name="serialSettings">Settings to pass to the controller</param>
+		/// <param name="p">idx of the Controller prefab</param>
+		/// <returns>Returns the Controller instantiated</returns>
+		private GameObject InitSerialController(SerialSettings serialSettings, int p)
         {
             var go = GameObject.Instantiate(_serialControllerPrefab, this.transform);
             try

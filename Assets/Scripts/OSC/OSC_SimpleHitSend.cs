@@ -5,18 +5,12 @@ namespace CRI.HitBoxTemplate.OSC
 {
     public class OSC_SimpleHitSend : MonoBehaviour
     {
-		private OSC_Sender _sender;
 		[SerializeField]
 		[Tooltip("Array of the prefab of the objects that will be put at the position of the impact. Each prefab is associated with its corresponding player index.")]
 		private GameObject[] _hitPrefabs;
 		[SerializeField]
 		[Tooltip("Activate simple hit effect.")]
 		private bool _simpleHit;
-
-		void Start()
-		{
-			_sender = GameObject.FindGameObjectWithTag("OSC").GetComponent<OSC_Sender>();
-		}
 
 		private void OnEnable()
 		{
@@ -34,7 +28,7 @@ namespace CRI.HitBoxTemplate.OSC
 			{
 				if (_simpleHit)
 					Instantiate(_hitPrefabs[e.playerIndex], e.impactPosition, Quaternion.identity);
-				_sender.SendHit(e);
+				OSC_Sender.Instance.SendHit(e);
 			}
 		}
 	}

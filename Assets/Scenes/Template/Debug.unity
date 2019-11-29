@@ -412,8 +412,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba47b33441ad1843b37c65c4ff73602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serialController: {fileID: 0}
-  _impact: {fileID: 0}
+  serialController: {fileID: 1262453704}
+  _impact: {fileID: 7726583474970102550, guid: 54d18d48182be7f47b058bdebdff2ad9, type: 3}
 --- !u!1 &1262453703
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,8 +444,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serialSettings:
-  - touchControlSerialPortName: COM3
+  - touchControlSerialPortName: COM6
     ledControlSerialPortName: COM4
+    playerControlSerialPortName: 
     playerCamera: {fileID: 411570567}
     impactThreshold: 5
     delayOffHit: 2

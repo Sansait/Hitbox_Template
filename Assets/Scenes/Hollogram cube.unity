@@ -853,7 +853,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 512411359}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 351b524f3a0f73b4a843b76b39962798, type: 3}
   m_Name: 
@@ -1580,8 +1580,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serialSettings:
-  - touchControlSerialPortName: COM3
-    ledControlSerialPortName: COM4
+  - touchControlSerialPortName: COM7
+    ledControlSerialPortName: COM3
+    playerControlSerialPortName: 
     playerCamera: {fileID: 411570567}
     impactThreshold: 5
     delayOffHit: 2

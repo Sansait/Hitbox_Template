@@ -79,9 +79,6 @@ namespace CRI.HitBoxTemplate.Serial
 
         private void Update()
         {
-            if (Input.GetKeyDown("space"))
-                SetOffsetValue();
-
             ShiftRawVal();
 
             //		this.curCol = getLerpColor(this.curRemapVal);

@@ -81,7 +81,6 @@ namespace CRI.HitBoxTemplate.RayCasting
 			_distLED = Vector3.Magnitude(_dir);
 			Ray _ray = new Ray(_posPlayer, _dir);
 
-			//Debug.DrawRay(_posPlayer, _dir);
 			return _ray;
 		}
 
@@ -115,8 +114,6 @@ namespace CRI.HitBoxTemplate.RayCasting
 						}
 					}
 					_texture.SetPixel(j, i, color);
-					//_texture.SetPixel(2 * j + 1, i, color);
-
 				}
 			}
 			_texture.Apply();

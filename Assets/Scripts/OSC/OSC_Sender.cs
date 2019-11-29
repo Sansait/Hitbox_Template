@@ -5,6 +5,23 @@ namespace CRI.HitBoxTemplate.OSC
 {
 	public class OSC_Sender : MonoBehaviour
 	{
+		private static OSC_Sender _instance;
+		public static OSC_Sender Instance
+		{
+			get
+			{
+				if (_instance == null)
+					Debug.LogError("OSC Sender is NULL.");
+
+				return (_instance);
+			}
+		}
+
+		private void Awake()
+		{
+			_instance = this;
+		}
+
 		[SerializeField]
 		[Tooltip("Link OSC script for configuration")]
 		private OSC osc;
@@ -55,13 +72,53 @@ namespace CRI.HitBoxTemplate.OSC
 		/// <summary>
 		/// Sends angle between player's orientation and the bag via OSC
 		/// </summary>
-		public void SendAngle(float angle)
+		public void SendAnglePlayer(float angle)
 		{
 			OscMessage message;
 
 			message = new OscMessage();
-			message.address = "/Angle";
+			message.address = "/AnglePlayer";
 			message.values.Add(angle);
+			osc.Send(message);
+		}
+
+		/// <summary>
+		/// Sends angle between player's orientation and the target via OSC
+		/// </summary>
+		public void SendAngleTarget(float angle)
+		{
+			OscMessage message;
+
+			message = new OscMessage();
+			message.address = "/AngleTarget";
+			message.values.Add(angle);
+			osc.Send(message);
+		}
+
+		/// <summary>
+		/// Sends angle between player's orientation and the bag via OSC
+		/// </summary>
+		public void SendDistance(float dist)
+		{
+			OscMessage message;
+
+			message = new OscMessage();
+			message.address = "/Dist";
+			message.values.Add(dist);
+			osc.Send(message);
+		}
+		
+		/// <summary>
+		/// Sends angle between player's orientation and the bag via OSC
+		/// </summary>
+		public void SendTargetPosition(int x, int y)
+		{
+			OscMessage message;
+
+			message = new OscMessage();
+			message.address = "/TargetPos";
+			message.values.Add(x);
+			message.values.Add(y);
 			osc.Send(message);
 		}
 	}
