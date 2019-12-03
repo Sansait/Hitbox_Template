@@ -90,11 +90,9 @@ namespace CRI.HitBoxTemplate.Example
 					int[] newTarget = new int[] { Random.Range(10, 55), Random.Range(10, 55) };
 					Vector3 newPos = FindPosLed(newTarget[0], newTarget[1]);
 					this.transform.position = newPos;
-					OSC_Sender.Instance.SendTargetPosition(newTarget[1], newTarget[0]);
+					OSC_Sender.Instance.SendTargetPosition(newTarget[0], newTarget[1]);
 				}
-				OSC_Sender.Instance.SendHit(pos);
 			}
 		}
 	}
 }
-

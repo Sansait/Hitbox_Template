@@ -74,6 +74,7 @@ namespace CRI.HitBoxTemplate.Example
                 // Layer of the player
                 LayerMask layerMask = 1 << (8 + 1 + playerIndex);
                 Vector3 cameraForward = playerCamera.transform.forward;
+                //Debug.DrawRay(position, cameraForward * 5000, Color.yellow, 10.0f);
                 var hits = Physics.RaycastAll(position, cameraForward, Mathf.Infinity, layerMask);
                 if (hits != null && hits.Any(x => x.collider.GetComponent<Target>() != null))
                 {
