@@ -27,8 +27,10 @@ namespace CRI.HitBoxTemplate.OSC
 			if (e.playerIndex < _hitPrefabs.Length)
 			{
 				if (_simpleHit)
+				{
 					Instantiate(_hitPrefabs[e.playerIndex], e.impactPosition, Quaternion.identity);
-				OSC_Sender.Instance.SendHit(e);
+					OSC_Sender.Instance.SendHit(e.impactPosition);	
+				}
 			}
 		}
 	}

@@ -58,14 +58,14 @@ namespace CRI.HitBoxTemplate.OSC
 		/// <summary>
 		/// Sends hit informations via OSC
 		/// </summary>
-		public void SendHit(ImpactPointControlEventArgs e)
+		public void SendHit(Vector2 pos)
 		{
 			OscMessage message;
 
 			message = new OscMessage();
 			message.address = "/Hit";
-			message.values.Add(e.impactPosition.x);
-			message.values.Add(e.impactPosition.y);
+			message.values.Add(pos.x);
+			message.values.Add(pos.y);
 			osc.Send(message);
 		}
 

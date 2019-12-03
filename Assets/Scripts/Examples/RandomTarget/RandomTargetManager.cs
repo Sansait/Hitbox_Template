@@ -5,19 +5,13 @@ using CRI.HitBoxTemplate.Serial;
 
 namespace CRI.HitBoxTemplate.RayCasting
 {
-	public class Cylinder_Casting : MonoBehaviour
+	public class RandomTargetManager : MonoBehaviour
 	{
 		[SerializeField]
-		int p;
+		private int p;
 		[SerializeField]
-		[Tooltip("Permanent Object to track")]
-		private GameObject _permanent;
-		[SerializeField]
-		[Tooltip("Ephemeral Objects to instantiate")]
-		private GameObject[] _hitPrefabs;
-		[SerializeField]
-		[Tooltip("Switch to hit instanciation")]
-		private bool _simpleHit;
+		[Tooltip("Target Object to track")]
+		private GameObject _target;
 		/// <summary>
 		/// LED controller => SerialLedController.cs
 		/// </summary>
@@ -87,7 +81,7 @@ namespace CRI.HitBoxTemplate.RayCasting
 		/// <summary>
 		/// Initializing a black texture
 		/// </summary>
-		void Init_Texture()
+		private void Init_Texture()
 		{
 			_texture = new Texture2D(64, 64);
 			for (int i = 0; i < 64; i++)
@@ -103,43 +97,10 @@ namespace CRI.HitBoxTemplate.RayCasting
 		// Update is called once per frame
 		void Update()
 		{
-			if (!_simpleHit) //Switch between permanent objects and hit-instanciated ephemeral objects
-				Permanent();
-			else
-				Ephemeral();
+			Permanent();
 		}
 
-		void Ephemeral()
-		{
-			if (!Init_SerialLedController())
-				return;
-			Init_Texture();
-
-			_vecForward = Vector3.Normalize(this.transform.forward);
-			_vecGrid = _vecForward * this.transform.lossyScale.x;
-
-			GameObject[] objs = GameObject.FindGameObjectsWithTag("Cube_To_Render");
-			foreach (var obj in objs)
-			{
-				for (int i = 0; i < 64; i++)
-				{
-					for (int j = 0; j < 64; j++)
-					{
-						Vector3 posLed = FindPosLed(i, j);
-						Vector3 closest = obj.GetComponent<CapsuleCollider>().ClosestPoint(posLed);
-						if (closest == posLed)
-						{
-							_texture.SetPixel(j, i, obj.GetComponent<MeshRenderer>().material.color);
-						}
-					}
-				}
-			}
-			_texture.Apply();
-			if (controller)
-				controller.SetPixelColor(_texture);
-		}
-
-		void Permanent()
+		private void Permanent()
 		{
 			if (!Init_SerialLedController())
 				return;
@@ -154,10 +115,10 @@ namespace CRI.HitBoxTemplate.RayCasting
 				{
 					Color color = new Color(0, 0, 0);
 					Vector3 posLed = FindPosLed(i, j);
-					Vector3 closest = _permanent.GetComponent<SphereCollider>().ClosestPoint(posLed);
+					Vector3 closest = _target.GetComponent<SphereCollider>().ClosestPoint(posLed);
 					if (closest == posLed)
 					{
-						color = _permanent.GetComponent<MeshRenderer>().material.color;
+						color = _target.GetComponent<MeshRenderer>().material.color;
 					}
 					_texture.SetPixel(j, i, color);
 				}
@@ -165,38 +126,6 @@ namespace CRI.HitBoxTemplate.RayCasting
 			_texture.Apply();
 			if (controller)
 				controller.SetPixelColor(_texture);
-		}
-
-		private void OnEnable()
-		{
-			if (_simpleHit)
-				ImpactPointControl.onImpact += OnImpact;
-		}
-
-		private void OnDisable()
-		{
-			if (_simpleHit)
-				ImpactPointControl.onImpact -= OnImpact;
-		}
-
-		private void OnImpact(object sender, ImpactPointControlEventArgs e)
-		{
-			if (e.playerIndex < _hitPrefabs.Length && e.playerIndex == p)
-			{
-				if (_simpleHit)
-				{
-					_vecForward = Vector3.Normalize(this.transform.forward);
-					_vecGrid = _vecForward * this.transform.lossyScale.x;
-					Vector2 pos = e.impactPosition;
-					pos.x = (pos.x + 80f) / 2.5f; //calibration for LED position
-					pos.y = (pos.y + 100f) / 3.125f; //do not question the math, just accept it
-					Vector3 posLed = FindPosLed(pos.y, pos.x);
-					Quaternion q = Quaternion.LookRotation(_vecLED_Up, _vecLED_Forward);
-					GameObject hitObject = PoolManager.Instance.RequestHitObject(e.playerIndex);
-					hitObject.transform.position = posLed;
-					hitObject.transform.rotation = q;
-				}
-			}
 		}
 	}
 }
