@@ -10,6 +10,8 @@ TagManager:
   - bag
   - SerialLedController
   - Cube_To_Render
+  - graph_line
+  - graph_point
   layers:
   - Default
   - TransparentFX
