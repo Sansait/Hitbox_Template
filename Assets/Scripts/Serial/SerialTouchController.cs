@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO.Ports;
 using System.Linq;
-using CRI.HitBoxTemplate.OSC;
 
 namespace CRI.HitBoxTemplate.Serial
 {
@@ -253,7 +252,6 @@ namespace CRI.HitBoxTemplate.Serial
 					}
 				}
 
-				OSC_Sender.Instance.SendAcceleration(_acceleration);
 
 				// Remap and display data points
 				for (int i = 0; i < _rows; i++)

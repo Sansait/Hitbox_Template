@@ -9,11 +9,17 @@ namespace Valve.VR
 		[Tooltip("Tracked object to point toward")]
 		private GameObject bag;
 
+		private SteamVR_TrackedObject_OnlyTilt _bagTracker;
+
+		private void Start()
+		{
+			_bagTracker = bag.GetComponent<SteamVR_TrackedObject_OnlyTilt>();
+		}
 
 		// Update is called once per frame
 		void Update()
 		{
-			Vector3 _bagDir = bag.transform.position - transform.position; //Computing vector between player and bag
+			Vector3 _bagDir = _bagTracker.posTracker - transform.position; //Computing vector between player and bag
 			float dist = Vector3.Magnitude(_bagDir); //Distance between player and bag tracker
 			_bagDir = Vector3.Normalize(new Vector3(_bagDir.x, 0, _bagDir.z)); //Getting rid of the height for the vector and normalizing
 			Vector3 _playerOrientation = Vector3.Normalize(transform.up); //Normalizing player orientation
