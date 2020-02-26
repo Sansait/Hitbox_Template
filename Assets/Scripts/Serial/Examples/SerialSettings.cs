@@ -16,6 +16,11 @@ namespace CRI.HitBoxTemplate.Example
         /// </summary>
         [Tooltip("Name of the the led controller serial port. (ex: COM5)")]
         public string ledControlSerialPortName;
+		/// <summary>
+        /// Name of the the led controller serial port. (ex: COM5)
+        /// </summary>
+        [Tooltip("Name of the the player movuino serial port. (ex: COM5)")]
+        public string playerControlSerialPortName;
         /// <summary>
         /// Camera used to display the screen on the bag.
         /// </summary>
@@ -44,6 +49,7 @@ namespace CRI.HitBoxTemplate.Example
 
         public SerialSettings(string touchSurfacePort,
             string ledControlPort,
+			string playerControlPort,
             int impactThreshold,
             int delayOffHit,
             Camera playerCamera,
@@ -52,6 +58,7 @@ namespace CRI.HitBoxTemplate.Example
         {
             this.touchControlSerialPortName = touchSurfacePort;
             this.ledControlSerialPortName = ledControlPort;
+			this.playerControlSerialPortName = playerControlPort;
             this.impactThreshold = impactThreshold;
             this.delayOffHit = delayOffHit;
             this.playerCamera = playerCamera;
