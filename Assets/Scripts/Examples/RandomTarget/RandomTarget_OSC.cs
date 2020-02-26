@@ -8,7 +8,7 @@ using CRI.HitBoxTemplate.OSC;
 
 namespace CRI.HitBoxTemplate.Example
 {
-	public class RandomTarget : MonoBehaviour
+	public class RandomTarget_OSC : MonoBehaviour
 	{
 		private static int _incPlayer = 0;
 		/// <summary>
@@ -42,6 +42,7 @@ namespace CRI.HitBoxTemplate.Example
 			_vecGrid = _vecForward * bag.transform.lossyScale.x;
 			Vector3 newPos = FindPosLed(32, 32);
 			this.transform.position = newPos;
+			OSC_Sender.Instance.SendTargetPosition(32, 32);
 		}
 
 		private void OnEnable()
@@ -91,7 +92,9 @@ namespace CRI.HitBoxTemplate.Example
 					int[] newTarget = new int[] { Random.Range(10, 55), Random.Range(10, 55) };
 					Vector3 newPos = FindPosLed(newTarget[0], newTarget[1]);
 					this.transform.position = newPos;
+					OSC_Sender.Instance.SendTargetPosition(newTarget[1], newTarget[0]);
 				}
+				OSC_Sender.Instance.SendHit(pos);
 			}
 		}
 	}
